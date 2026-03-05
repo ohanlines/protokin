@@ -1,0 +1,15 @@
+# Local runtime/config secrets
+configs/*.edn
+!configs/*.edn.example
+dev/*
+!dev/user.clj
+config.edn
+.env.local
+
+# Clojure local/cache artifacts
+.cpcache/
+.nrepl-port
+.m2/
+
+# Notes
+DEPLOYMENTS.MD

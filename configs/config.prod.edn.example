@@ -1,0 +1,6 @@
+{:telegram-bot-token "REPLACE_WITH_PROD_BOT_TOKEN"
+ :postgres           {:dbtype   "postgres"
+                      :host     "REPLACE_WITH_PROD_DB_HOST"
+                      :dbname   "protokin_prod"
+                      :username "REPLACE_WITH_PROD_DB_USER"
+                      :password "REPLACE_WITH_PROD_DB_PASSWORD"}}

@@ -1,0 +1,6 @@
+{:telegram-bot-token "REPLACE_WITH_DEV_BOT_TOKEN"
+ :postgres           {:dbtype   "postgres"
+                      :host     "localhost"
+                      :dbname   "protokin_dev"
+                      :username "postgres"
+                      :password "postgres"}}

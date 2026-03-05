@@ -1,0 +1,4 @@
+Expense Report
+==============
+food: Rp15,000
+transport: Rp20,000
