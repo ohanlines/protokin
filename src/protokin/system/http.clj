@@ -6,10 +6,20 @@
     [protokin.api.routes :as api-routes]
     [protokin.system.state :as state]))
 
+(defn- env-port
+  []
+  (let [raw (System/getenv "PORT")]
+    (if (seq raw)
+      (try
+        (Integer/parseInt raw)
+        (catch Exception _
+          8080))
+      8080)))
+
 (def service
   {::http/routes api-routes/routes
    ::http/type :jetty
-   ::http/port 8080
+   ::http/port (env-port)
    ::http/join? false})
 
 (defn start!
