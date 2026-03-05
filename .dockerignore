@@ -1,0 +1,11 @@
+.git
+.github
+.m2
+.cpcache
+.nrepl-port
+.env.local
+config.edn
+configs/*.edn
+tmp
+logs*.log
+
