@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-TAG="${1:-}"
 APP_DIR="${APP_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 ENV_FILE="${ENV_FILE:-${APP_DIR}/.env.prod}"
 IMAGE_NAME="${IMAGE_NAME:-protokin:prod}"
@@ -26,32 +25,6 @@ if ! command -v docker >/dev/null 2>&1; then
 fi
 
 cd "${APP_DIR}"
-
-if command -v git >/dev/null 2>&1 && git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-  echo "Fetching latest git refs..."
-  git fetch --tags --prune origin
-
-  if [[ -n "${TAG}" ]]; then
-    if [[ ! "${TAG}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-      echo "Tag must match semantic format: vMAJOR.MINOR.PATCH"
-      exit 1
-    fi
-
-    if ! git rev-parse "refs/tags/${TAG}" >/dev/null 2>&1; then
-      echo "Tag ${TAG} not found"
-      exit 1
-    fi
-
-    echo "Checking out tag ${TAG}"
-    git checkout "${TAG}"
-  else
-    echo "Checking out latest main"
-    git checkout main
-    git pull --ff-only origin main
-  fi
-else
-  echo "No git repository in ${APP_DIR}, skipping source update."
-fi
 
 echo "Building image ${IMAGE_NAME}"
 docker build -t "${IMAGE_NAME}" .
@@ -84,4 +57,3 @@ curl -fsS "${BASE_URL}/health" >/dev/null
 curl -fsS "${BASE_URL}/ready" >/dev/null
 
 echo "Deployment completed."
-
