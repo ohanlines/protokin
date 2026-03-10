@@ -10,5 +10,5 @@ COPY . .
 ENV PORT=8080
 EXPOSE 8080
 
-CMD ["clj", "-M", "-m", "protokin.core"]
-
+ENTRYPOINT ["clj"]
+CMD ["-M", "-m", "protokin.core"]
