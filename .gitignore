@@ -5,6 +5,7 @@ dev/*
 !dev/user.clj
 config.edn
 .env.local
+.env.prod
 
 # Clojure local/cache artifacts
 .cpcache/
