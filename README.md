@@ -29,7 +29,7 @@ or run with env-file script:
 
 ```bash
 cp .env.local.example .env.local
-./scripts/deploy-aws-local.sh
+./scripts/deploy-aws.sh
 ```
 
 Health check:
@@ -156,10 +156,9 @@ curl http://localhost:8080/metrics
   - returns current in-memory unlocked session count.
 
 ## Deployment Scripts
-- local deploy with Docker: `./scripts/deploy-aws-local.sh`
+- local deploy with Docker: `./scripts/deploy-aws.sh`
 - aws vm migration: `./scripts/migrate-aws-prod.sh`
-- aws vm deploy (main): `./scripts/deploy-aws-prod.sh`
-- aws vm deploy (release tag): `./scripts/deploy-aws-prod.sh vX.Y.Z`
+- aws vm deploy: `./scripts/deploy-aws.sh`
 
 AWS deploy scripts assume:
 - app directory: `/opt/protokin`

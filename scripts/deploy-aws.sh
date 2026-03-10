@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-TAG="${1:-}"
 APP_DIR="${APP_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 ENV_FILE="${ENV_FILE:-${APP_DIR}/.env.prod}"
 IMAGE_NAME="${IMAGE_NAME:-protokin:prod}"
@@ -25,39 +24,18 @@ if ! command -v docker >/dev/null 2>&1; then
   exit 1
 fi
 
-cd "${APP_DIR}"
-
-if command -v git >/dev/null 2>&1 && git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-  echo "Fetching latest git refs..."
-  git fetch --tags --prune origin
-
-  if [[ -n "${TAG}" ]]; then
-    if [[ ! "${TAG}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-      echo "Tag must match semantic format: vMAJOR.MINOR.PATCH"
-      exit 1
-    fi
-
-    if ! git rev-parse "refs/tags/${TAG}" >/dev/null 2>&1; then
-      echo "Tag ${TAG} not found"
-      exit 1
-    fi
-
-    echo "Checking out tag ${TAG}"
-    git checkout "${TAG}"
-  else
-    echo "Checking out latest main"
-    git checkout main
-    git pull --ff-only origin main
-  fi
-else
-  echo "No git repository in ${APP_DIR}, skipping source update."
+if ! command -v clj >/dev/null 2>&1; then
+  echo "clj is required for migrations"
+  exit 1
 fi
+
+cd "${APP_DIR}"
 
 echo "Building image ${IMAGE_NAME}"
 docker build -t "${IMAGE_NAME}" .
 
 echo "Running migration"
-"${APP_DIR}/scripts/migrate-aws-prod.sh"
+"${APP_DIR}/scripts/migrate-local.sh"
 
 echo "Restarting container ${CONTAINER_NAME}"
 if docker ps -a --format '{{.Names}}' | grep -q "^${CONTAINER_NAME}$"; then
@@ -84,4 +62,3 @@ curl -fsS "${BASE_URL}/health" >/dev/null
 curl -fsS "${BASE_URL}/ready" >/dev/null
 
 echo "Deployment completed."
-
