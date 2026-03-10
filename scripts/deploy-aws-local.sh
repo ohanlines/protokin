@@ -30,7 +30,7 @@ echo "Building image ${IMAGE_NAME}"
 docker build -t "${IMAGE_NAME}" .
 
 echo "Running migration"
-"${APP_DIR}/scripts/migrate-aws-prod.sh"
+"${APP_DIR}/scripts/migrate-local.sh"
 
 echo "Restarting container ${CONTAINER_NAME}"
 if docker ps -a --format '{{.Names}}' | grep -q "^${CONTAINER_NAME}$"; then
@@ -46,7 +46,7 @@ docker run -d \
   "${IMAGE_NAME}" >/dev/null
 
 echo "Running smoke checks"
-for i in {1..30}; do
+for i in {1..5}; do
   if curl -fsS "${BASE_URL}/health" >/dev/null; then
     break
   fi

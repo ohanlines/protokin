@@ -16,9 +16,15 @@
           8080))
       8080)))
 
+(defn- env-host
+  []
+  (let [raw (System/getenv "HTTP_HOST")]
+    (if (seq raw) raw "0.0.0.0")))
+
 (def service
   {::http/routes api-routes/routes
    ::http/type :jetty
+   ::http/host (env-host)
    ::http/port (env-port)
    ::http/join? false})
 
