@@ -107,10 +107,8 @@
   (let [dek (session/active-dek (:id user))]
     (if-not dek
       (common/send-text! client (:chat-id row) "Session locked. Run /unlock first.")
-      (let [day (try
-                  (LocalDate/parse arg-day)
-                  (catch DateTimeParseException _
-                    nil))]
+      (let [zone (common/user-zone user)
+            day  (common/parse-expense-date arg-day zone)]
         (if-not day
           (common/send-text! client (:chat-id row) "Invalid day format. Use /review YYYY-MM-DD.")
           (let [rows (db/expenses-by-day ds {:user-id (:id user) :expense-date day})]
@@ -123,9 +121,9 @@
                                       (get-in r [:payload :transaction-name] "-")))
                                decoded)]
                 (common/send-text! client (:chat-id row)
-                                   (str "Expenses on " arg-day ":\n" (str/join "\n" lines))))
+                                   (str "Expenses on " day ":\n" (str/join "\n" lines))))
               (common/send-text! client (:chat-id row)
-                                 (str "No expenses found on " arg-day ".")))))))))
+                                 (str "No expenses found on " day ".")))))))))
 
 (defn handle-review-csv!
   [{:keys [client ds user]} row]

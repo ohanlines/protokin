@@ -134,7 +134,7 @@
       (gm/handle-review-month! ctx arg row)
 
       (= action "review-day")
-      (gm/handle-review-per-day! ctx arg row)
+      (gm/handle-review-per-day! ctx nil row)
 
       :else
       (when (:chat-id row)

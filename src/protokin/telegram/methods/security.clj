@@ -28,11 +28,11 @@
 (defn handle-set-passphrase!
   [{:keys [client ds user]} row]
   (let [chat-id (:chat-id row)
-        passphrase (rest-arg (:message-text row) "/set-passphrase")
+        passphrase (rest-arg (:message-text row) "/setpass")
         profile (require-crypto-profile ds user)]
     (cond
       (nil? passphrase)
-      (common/send-text! client chat-id "Usage: /set-passphrase <min-8-char-passphrase>")
+      (common/send-text! client chat-id "Usage: /setpass <min-8-char-passphrase>")
 
       (not (min-passphrase? passphrase))
       (common/send-text! client chat-id "Passphrase must be at least 8 characters.")
@@ -74,7 +74,7 @@
       (common/send-text! client chat-id "Usage: /unlock <your-passphrase>")
 
       (nil? profile)
-      (common/send-text! client chat-id "No passphrase yet. Run /set-passphrase first.")
+      (common/send-text! client chat-id "No passphrase yet. Run /setpass first.")
 
       :else
       (try
@@ -117,7 +117,7 @@
       (common/send-text! client chat-id "New passphrase must be at least 8 characters.")
 
       (nil? profile)
-      (common/send-text! client chat-id "No passphrase yet. Run /set-passphrase first.")
+      (common/send-text! client chat-id "No passphrase yet. Run /setpass first.")
 
       :else
       (try
