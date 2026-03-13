@@ -61,7 +61,7 @@
   [{:keys [client]} row]
   (common/send-text! client (:chat-id row)
                      (str "Welcome.\n"
-                          "1) Set passphrase: /set-passphrase <your-passphrase>\n"
+                          "1) Set passphrase: /setpass <your-passphrase>\n"
                           "2) Unlock each session: /unlock <your-passphrase>\n"
                           "3) Add expense: /add 15000 food lunch")))
 
@@ -91,8 +91,8 @@
   (into {} routes))
 
 (def user-required-commands
-  #{"/set-passphrase" "/unlock" "/lock" "/change-passphrase" "/delete-account"
-    "/add" "/review" "/review-csv" "/review-chart" "/delete"})
+  #{"/setpass" "/unlock" "/lock" "/changepass" "/deleteaccount"
+    "/add" "/review" "/reviewcsv" "/delete"})
 
 (defn- handle-command!
   [{:keys [client ds user] :as ctx} row]

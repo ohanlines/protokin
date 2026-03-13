@@ -3,14 +3,25 @@
     [clojure.string :as str]))
 
 (def built-in-categories
-  {"food" "Food & Drink"
-   "transport" "Transport"
-   "shopping" "Shopping"
-   "bills" "Bills"
-   "health" "Health"
+  {"food"          "Food & Drink"
+   "groceries"     "Groceries"
+   "transport"     "Transport"
+   "travel"        "Travel"
+   "shopping"      "Shopping"
+   "bills"         "Bills"
+   "utilities"     "Utilities"
+   "health"        "Health"
+   "beauty"        "Personal Care"
    "entertainment" "Entertainment"
-   "education" "Education"
-   "other" "Other"})
+   "hobbies"       "Toys & Hobbies"
+   "sport"         "Sports & Fitness"
+   "gifts"         "Gift & Donations"
+   "family"        "Family & Kids"
+   "education"     "Education"
+   "savings"       "Savings & Investments"
+   "tools"         "Tools & Software"
+   "work"          "Work Expenses"
+   "other"         "Other"})
 
 (defn category-label
   [category-key]

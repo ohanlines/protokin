@@ -164,8 +164,8 @@
       (common/send-text! client (:chat-id row) "Usage: /delete-account CONFIRM"))))
 
 (def routes
-  [["/set-passphrase" handle-set-passphrase!]
+  [["/setpass" handle-set-passphrase!]
    ["/unlock" handle-unlock!]
    ["/lock" handle-lock!]
-   ["/change-passphrase" handle-change-passphrase!]
-   ["/delete-account" handle-delete-account!]])
+   ["/changepass" handle-change-passphrase!]
+   ["/deleteaccount" handle-delete-account!]])
